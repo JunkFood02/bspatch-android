@@ -1,0 +1,38 @@
+cmake_minimum_required(VERSION 3.12)
+
+project(bsdiff)
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/bzip)
+
+set(CMAKE_CXX_STANDARD 17)
+
+set(BZIP_SOURCES
+        bzip/bzlib.c
+        bzip/crctable.c
+        bzip/compress.c
+        bzip/decompress.c
+        bzip/randtable.c
+        bzip/blocksort.c
+        bzip/huffman.c
+)
+
+set_source_files_properties(bspatch.c PROPERTIES LANGUAGE C)
+
+add_library(
+        bspatch
+        STATIC
+        bspatch.c
+        ${BZIP_SOURCES})
+
+add_library(
+        bspatch-android
+        SHARED
+        bspatch-android.cpp
+)
+
+target_link_options(bspatch PRIVATE "-Wl,-z,max-page-size=16384")
+target_link_options(bspatch-android PRIVATE "-Wl,-z,max-page-size=16384")
+
+target_link_libraries(bspatch-android bspatch)
+
+

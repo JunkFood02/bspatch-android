@@ -1,0 +1,4 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.Bsdiff" parent="Theme.Material3.DayNight.NoActionBar"></style>
+</resources>
